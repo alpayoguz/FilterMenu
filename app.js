@@ -90,7 +90,7 @@ window.addEventListener("DOMContentLoaded",()=>{
   </article>`
   } 
   )
-    displayMenu = displayMenu.join("fff");
+    displayMenu = displayMenu.join("");
     menuHTml.innerHTML = displayMenu
 })
 
