@@ -71,11 +71,32 @@ const menu = [
     img: "./images/item-9.jpeg",
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
+  {
+    id: 10,
+    title: "Juicy Steak",
+    category: "dinner",
+    price: 22.99,
+    img: "./images/item-10.jpeg",
+    desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
+  }
 ];
 
-let menuHTml = document.querySelector(".menu");
+const sectionCenter = document.querySelector(".section-center");
+const buttonContainer = document.querySelector(".btn-container");
+
+
 window.addEventListener("DOMContentLoaded",()=>{
-  let displayMenu = menu.map(item=> {
+  displayMenuItems(menu);
+  displayButtons();
+ 
+})
+
+
+
+// filter items
+
+function displayMenuItems(menuItem){
+  let displayMenu = menuItem.map(item=> {
     return `<article class="menu-item">
     <img src=${item.img} alt=${item.title} class="photo">
     <div class="item-info">
@@ -91,8 +112,41 @@ window.addEventListener("DOMContentLoaded",()=>{
   } 
   )
     displayMenu = displayMenu.join("");
-    menuHTml.innerHTML = displayMenu
+    sectionCenter.innerHTML = displayMenu
+}
+
+function displayButtons(){
+  const categories = menu.reduce((acc, currVal)=>{
+    if(!acc.includes(currVal.category)){
+        acc.push(currVal.category);
+    }
+    return acc;
+    
+},["all"])
+const categoryButtons = categories.map(item=>{
+   return `  <div class="filter-btn" type="button" data-type=${item}>${item}</div>`
+}).join("");
+buttonContainer.innerHTML = categoryButtons;
+const filterButtons = document.querySelectorAll(".filter-btn");
+filterButtons.forEach((btn)=>{
+  btn.addEventListener("click",(event)=>{
+    const category = event.currentTarget.dataset.type;
+    let menuCategory = menu.filter((menuItem)=>{
+      if(category === menuItem.category){
+        return menuItem;
+      }
+    })
+    
+    if(category === "all"){
+      displayMenuItems(menu);
+    }else{
+      displayMenuItems(menuCategory);
+    }
+
+  })
 })
+}
+
 
 
 
